@@ -1,0 +1,76 @@
+// Rally Movement — data model for storefront + admin backend
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id          String     @id @default(cuid())
+  slug        String     @unique
+  name        String
+  category    String // "The Bag" | "Bags" | "Ready-to-Wear" | "Whisper" | "Accessories"
+  subtitle    String? // e.g. "Mark II · Magnetic Close"
+  description String
+  material    String? // nylon, microfiber leather, denim
+  price       Int // USD, integer dollars
+  compareAt   Int? // original price for sale display
+  image       String? // primary photo (Unsplash mockup or real product shot)
+  badge       String? // "New" | "Icon" | "Sale" | "Sold Out" | null
+  featured    Boolean    @default(false)
+  active      Boolean    @default(true)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  variants    Variant[]
+  orderItems  OrderItem[]
+}
+
+// A colorway of a product — Rally names them poetically (Whisper Silver Lining, Scarlet, Denim...)
+model Variant {
+  id        String  @id @default(cuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  colorway  String // "Silver Lining", "Denim", "Scarlet"...
+  hex       String // swatch color for the UI
+  gradient  String? // optional CSS gradient token name for placeholder art
+  stock     Int     @default(0)
+  sku       String  @unique
+}
+
+model Order {
+  id         String      @id @default(cuid())
+  number     String      @unique // human-friendly RM-0001
+  email      String
+  firstName  String
+  lastName   String
+  phone      String?
+  address1   String
+  address2   String?
+  city       String
+  postalCode String
+  country    String      @default("Thailand")
+  subtotal   Int
+  shipping   Int         @default(0)
+  discount   Int         @default(0)
+  total      Int
+  promoCode  String?
+  status     String      @default("pending") // pending | paid | shipped | delivered | cancelled
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  items      OrderItem[]
+}
+
+model OrderItem {
+  id         String  @id @default(cuid())
+  orderId    String
+  order      Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId  String
+  product    Product @relation(fields: [productId], references: [id])
+  name       String // snapshot at purchase time
+  colorway   String
+  price      Int
+  quantity   Int     @default(1)
+}
