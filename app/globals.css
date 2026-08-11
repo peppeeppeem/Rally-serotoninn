@@ -1,0 +1,205 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================================
+   RÄLLY — BRAND TOKENS  (matched to rallymovement.com)
+   ----------------------------------------------------------------------------
+   Ground: warm blush cream · Ink: warm near-black · Accent: coral-red
+   Type: Fraunces (elegant serif display) + Archivo (grotesque UI)
+   Colors are space-separated RGB triplets so Tailwind can apply opacity.
+   Sampled from the client's real site: bg #FDE8D5 · ink-2 #575049 · accent #F9544C
+   ============================================================================ */
+
+:root {
+  /* type roles */
+  --font-display: "Fraunces Variable", "Times New Roman", Georgia, serif;
+  --font-serif: "Fraunces Variable", "Times New Roman", Georgia, serif;
+  --font-body: "Archivo Variable", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --font-mono: "Archivo Variable", "Helvetica Neue", Arial, sans-serif; /* labels */
+
+  /* LIGHT — the brand identity */
+  --bg: 253 232 213;      /* #FDE8D5 blush cream */
+  --bg-2: 250 224 202;    /* #FAE0CA */
+  --surface: 246 216 192; /* #F6D8C0 */
+  --card: 252 231 214;    /* #FCE7D6 */
+  --ink: 26 21 17;        /* #1A1511 warm black */
+  --ink-2: 87 80 73;      /* #575049 */
+  --ink-3: 150 138 126;   /* #968A7E */
+  --accent: 249 84 76;    /* #F9544C coral-red */
+  --denim: 60 88 134;     /* swatch accent */
+  --whisper: 183 173 158;
+  --line: 26 21 17;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    /* DARK — warm night (secondary) */
+    --bg: 24 20 16;       /* #181410 */
+    --bg-2: 30 25 20;     /* #1E1914 */
+    --surface: 38 32 26;  /* #26201A */
+    --card: 33 28 22;     /* #211C16 */
+    --ink: 245 236 226;   /* #F5ECE2 */
+    --ink-2: 168 156 143; /* #A89C8F */
+    --ink-3: 110 101 92;  /* #6E655C */
+    --accent: 250 100 90; /* #FA645A */
+    --denim: 122 152 206;
+    --whisper: 183 173 158;
+    --line: 245 236 226;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: 24 20 16;
+  --bg-2: 30 25 20;
+  --surface: 38 32 26;
+  --card: 33 28 22;
+  --ink: 245 236 226;
+  --ink-2: 168 156 143;
+  --ink-3: 110 101 92;
+  --accent: 250 100 90;
+  --denim: 122 152 206;
+  --whisper: 183 173 158;
+  --line: 245 236 226;
+}
+
+@layer base {
+  * {
+    border-color: rgb(var(--line) / 0.14);
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background: rgb(var(--bg));
+    color: rgb(var(--ink));
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection {
+    background: rgb(var(--accent));
+    color: #fff;
+  }
+}
+
+@layer components {
+  /* Display = elegant serif (RISE & SHINE, headings, the Rälly wordmark) */
+  .display {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 0.98;
+  }
+  .serif-i {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+  }
+  /* Utility label = Archivo, uppercase, tracked (replaces the old mono motif) */
+  .mono,
+  .label {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 500;
+  }
+
+  /* Buttons — black rectangle with white tracked caps, like the real site */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: var(--font-body);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 14px 26px;
+    border: 1px solid rgb(var(--ink));
+    transition: background 0.22s, color 0.22s, border-color 0.22s, opacity 0.22s;
+    cursor: pointer;
+  }
+  .btn--solid {
+    background: rgb(var(--ink));
+    color: rgb(var(--bg));
+  }
+  .btn--solid:hover {
+    background: rgb(var(--accent));
+    border-color: rgb(var(--accent));
+    color: #fff;
+  }
+  .btn--ghost {
+    color: rgb(var(--ink));
+    background: transparent;
+  }
+  .btn--ghost:hover {
+    background: rgb(var(--ink));
+    color: rgb(var(--bg));
+  }
+  .btn--accent {
+    background: rgb(var(--accent));
+    border-color: rgb(var(--accent));
+    color: #fff;
+  }
+  .btn--accent:hover {
+    opacity: 0.88;
+  }
+  .btn--onDark {
+    border-color: rgba(255, 255, 255, 0.55);
+    color: #fff;
+    background: transparent;
+  }
+  .btn--onDark:hover {
+    background: #fff;
+    color: rgb(var(--ink));
+    border-color: #fff;
+  }
+
+  .link-u {
+    font-family: var(--font-body);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgb(var(--ink-2));
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 2px;
+    transition: color 0.2s;
+    white-space: nowrap;
+  }
+  .link-u:hover {
+    color: rgb(var(--accent));
+  }
+}
+
+/* Placeholder colorway art (fallback when no photo) */
+.g-denim { background: linear-gradient(158deg, #6f8bb8 0%, #3c5a86 52%, #1c2f4c 100%); }
+.g-scarlet { background: linear-gradient(158deg, #f9544c 0%, #c33227 52%, #6d1610 100%); }
+.g-silver { background: linear-gradient(158deg, #ded7ca 0%, #b2a896 52%, #7c7263 100%); }
+.g-holly { background: linear-gradient(158deg, #efe6d8 0%, #d3c4a9 52%, #98876b 100%); }
+.g-noir { background: linear-gradient(158deg, #34302a 0%, #1b1712 52%, #0a0806 100%); }
+.g-olive { background: linear-gradient(158deg, #8a8548 0%, #565626 52%, #23230d 100%); }
+.g-ido { background: linear-gradient(158deg, #f0dedd 0%, #cba7a6 52%, #7c5658 100%); }
+.g-blue2 { background: linear-gradient(158deg, #8fb4d6 0%, #587fa0 52%, #2a4258 100%); }
+.g-terracotta { background: linear-gradient(158deg, #e08a5a 0%, #b5552b 52%, #5c2410 100%); }
+.g-tropicana { background: linear-gradient(158deg, #ffcf6b 0%, #f2872f 52%, #b5461e 100%); }
+
+/* Marquee */
+@keyframes marq { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.marq-track { display: flex; white-space: nowrap; animation: marq 40s linear infinite; }
+.marq-fast { animation-duration: 26s; }
+
+/* Scroll reveal */
+.rev { opacity: 0; transform: translateY(22px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.rev.on { opacity: 1; transform: none; }
+
+/* Hide scrollbar on rails */
+.no-sb { scrollbar-width: none; -ms-overflow-style: none; }
+.no-sb::-webkit-scrollbar { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .marq-track { animation: none; }
+  .rev { opacity: 1; transform: none; transition: none; }
+  * { transition-duration: 0.01ms !important; }
+}
