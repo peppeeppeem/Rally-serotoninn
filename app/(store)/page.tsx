@@ -6,11 +6,7 @@ import { ProductCard } from "@/components/ProductCard";
 
 export const dynamic = "force-dynamic";
 
-const HERO = [
-  "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=800&q=80",
-  "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?auto=format&fit=crop&w=800&q=80",
-  "https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?auto=format&fit=crop&w=800&q=80",
-];
+const HERO_BANNER = "/campaign/rise-and-shine.jpg";
 
 export default async function HomePage() {
   const [featured, newIn] = await Promise.all([
@@ -20,30 +16,22 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* ─── HERO ─── */}
-      <section className="relative">
-        <div className="grid grid-cols-3">
-          {HERO.map((src, i) => (
-            <div key={i} className={`relative aspect-[3/4] sm:aspect-[3/4] ${i === 1 ? "-mt-0 sm:-mt-6" : ""}`}>
-              <Image src={src} alt="" fill sizes="33vw" priority className="object-cover" />
-            </div>
-          ))}
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/45" />
+      {/* ─── HERO BANNER ─── */}
+      <section className="relative overflow-hidden">
+        <div className="relative aspect-[5/2] w-full sm:aspect-[21/8] lg:aspect-[21/7]">
+          <Image
+            src={HERO_BANNER}
+            alt="Rälly Rise & Shine Drop #2"
+            fill
+            sizes="100vw"
+            priority
+            className="object-cover object-center"
+          />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/5 via-transparent to-black/30" />
         </div>
-
-        <div className="absolute inset-x-0 bottom-0 flex flex-col items-center px-5 pb-10 text-center text-white">
-          <span className="display mb-1 text-[22px] font-medium italic">Rälly</span>
-          <div className="flex items-baseline gap-4">
-            <span className="display text-[clamp(40px,10vw,132px)] font-semibold leading-[0.9] drop-shadow-[0_2px_20px_rgba(0,0,0,0.4)]">
-              Rise&nbsp;&amp;&nbsp;Shine
-            </span>
-          </div>
-          <span className="label mt-2 text-[10px] text-white/80">Drop #2 · SS26</span>
-        </div>
-
-        <div className="absolute left-1/2 top-[42%] -translate-x-1/2">
-          <Link href="/shop" className="btn btn--solid pointer-events-auto bg-ink/90 backdrop-blur">
-            Shop the new collection
+        <div className="absolute inset-x-0 bottom-6 flex justify-center sm:bottom-10">
+          <Link href="/shop" className="btn btn--solid bg-white/90 text-ink backdrop-blur hover:bg-white">
+            Shop the collection →
           </Link>
         </div>
       </section>
